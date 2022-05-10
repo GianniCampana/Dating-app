@@ -3,6 +3,9 @@ using API.Data;
 using System.Collections.Generic;
 using API.Entities;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 namespace API.Controllers
 {
     [ApiController]
@@ -18,16 +21,16 @@ namespace API.Controllers
         //aggiungiamo due endpoint per ottenere gli users dal db, uno generale e uno specifico
 
         [HttpGet]
-        public ActionResult<IEnumerable<AppUser>> GetUsers()
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
-                var users = _context.Users.ToList();
+                var users = await _context.Users.ToListAsync();
                 return users;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AppUser> GetUsers(int id)
+        public async Task<ActionResult<AppUser>> GetUsers(int id)
         {
-                var user = _context.Users.Find(id);
+                var user = await _context.Users.FindAsync(id);
                 return user;
         }
          
