@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "A61nSvBOXzCKPlBcrOe3GKwykf5SaFNYS0G+15JuNNLEeQ8gh0g/5tF/MDU6MTfwGTfMz7aDEPKBJYTGJ/lTdA==",
+  "dgSpecHash": "+DBaKI5oDqHbIl68qhGUm90Fu9qlgG1+grkn5wGzDmoB/O7UlrtZq5pBBF0VRMXFRHAZeLgvDsQ6D87NeF4QSQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\GIANNI\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\GIANNI\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

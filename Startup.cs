@@ -24,7 +24,7 @@ namespace API
             _config = config;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get;}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,6 +39,16 @@ namespace API
             {
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
+            //questa stringa mi permette dinon avere la sicurezza corse e ricevere tutte le chiamate api nel frontend che non hanno la stesa origine del backend
+            services.AddCors(x => {
+                x.AddPolicy(
+                    name: "CORS_POLICY",
+                    builder =>{
+                        builder.WithOrigins("http://localhost:4200".Trim('/', '\\'))
+                        .AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    }
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,16 +60,21 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
-
+        
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
+            //questa stringa mi permette dinon avere la sicurezza corse e ricevere tutte le chiamate api nel frontend che non hanno la stesa origine del backend
+            //app.UseCors(x=> x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            //app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyMethod());
+            app.UseCors("CORS_POLICY"); 
+            
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors("CORS_POLICY");
             });
         }
     }

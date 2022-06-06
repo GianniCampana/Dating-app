@@ -1260,11 +1260,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj",
+      "projectPath": "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj",
       "packagesPath": "C:\\Users\\GIANNI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\GIANNI\\DatingApp\\API\\obj\\",
+      "outputPath": "C:\\Users\\GIANNI\\DatingApp\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\GIANNI\\AppData\\Roaming\\NuGet\\NuGet.Config",
