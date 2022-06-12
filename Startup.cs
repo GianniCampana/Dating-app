@@ -44,7 +44,7 @@ namespace API
                 x.AddPolicy(
                     name: "CORS_POLICY",
                     builder =>{
-                        builder.WithOrigins("http://localhost:4200".Trim('/', '\\'))
+                        builder.WithOrigins("https://localhost:4200".Trim('/', '\\'))
                         .AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                     }
                 );
