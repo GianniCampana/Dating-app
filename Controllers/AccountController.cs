@@ -18,7 +18,7 @@ namespace API.Controllers
         {
             _context = context;
         }
-
+        //REGISTRAZIONE UTENTE
         [HttpPost("register")]
         // le stringhe username e password devono essere passate come oggetto, in questo caso RegisterDto
         public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
@@ -47,5 +47,30 @@ namespace API.Controllers
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
+
+        //LOGIN UTENTE
+        [HttpPost("login")]
+        
+        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        {
+            //richiedo al db lo username
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+            //se è null allor anon sono registrato
+            if (user == null) return Unauthorized("Invalid username");
+
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            //comparo le password per vedere se soo uguali, se lo sono allora posso accedere
+            for(int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
+            }
+
+            return user;
+        }
+
+
     }
 }

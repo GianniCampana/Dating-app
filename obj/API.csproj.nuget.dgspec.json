@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj": {}
+    "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj": {
+    "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj",
+        "projectUniqueName": "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\GIANNI\\DatingApp\\api\\API.csproj",
+        "projectPath": "C:\\Users\\GIANNI\\DatingApp\\API\\API.csproj",
         "packagesPath": "C:\\Users\\GIANNI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\GIANNI\\DatingApp\\api\\obj\\",
+        "outputPath": "C:\\Users\\GIANNI\\DatingApp\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\GIANNI\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,6 +53,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.21.0, )"
             }
           },
           "imports": [
