@@ -1,6 +1,7 @@
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -13,15 +14,18 @@ namespace API.Controllers
     public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(DataContext context)
+        public AccountController(DataContext context, ITokenService tokenService)
         {
+            _tokenService = tokenService;
+
             _context = context;
         }
         //REGISTRAZIONE UTENTE
         [HttpPost("register")]
         // le stringhe username e password devono essere passate come oggetto, in questo caso RegisterDto
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             //prima di registrare un utente controllo se � presente nel database con il metodo UserExists()
 
@@ -38,7 +42,12 @@ namespace API.Controllers
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return user;
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
         }
 
         // scrivo un metodo che restituisce un valore booleano che mi dice se lo Usermane � univoco nel database oppure no
@@ -51,7 +60,7 @@ namespace API.Controllers
         //LOGIN UTENTE
         [HttpPost("login")]
         
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             //richiedo al db lo username
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
@@ -68,7 +77,11 @@ namespace API.Controllers
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
             }
 
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
         }
 
 

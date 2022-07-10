@@ -15,6 +15,10 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
 using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using API.Extensions;
 
 namespace API
 {
@@ -31,16 +35,13 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddApplicationServices(_config);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
-            services.AddDbContext<DataContext>(options =>
-            {
-                options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            });
+            
             //questa stringa mi permette dinon avere la sicurezza corse e ricevere tutte le chiamate api nel frontend che non hanno la stesa origine del backend
             services.AddCors(x => {
                 x.AddPolicy(
@@ -51,6 +52,7 @@ namespace API
                     }
                 );
             });
+            services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,8 +72,8 @@ namespace API
             //questa stringa mi permette dinon avere la sicurezza corse e ricevere tutte le chiamate api nel frontend che non hanno la stesa origine del backend
             //app.UseCors(x=> x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             //app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyMethod());
-            app.UseCors("CORS_POLICY"); 
-            
+            app.UseCors("CORS_POLICY");
+            app.UseAuthentication();
             app.UseAuthorization();
             
             app.UseEndpoints(endpoints =>
